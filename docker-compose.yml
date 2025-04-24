@@ -1,0 +1,85 @@
+version: "3"
+
+volumes:
+  portainer_data:
+
+services: 
+  portainer: 
+    image: portainer/portainer-ce
+    container_name: portainer
+    ports:
+      - "8000:8000"
+      - "9443:9443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "portainer_data:/data portainer/portainer-ce:lts"
+    restart: always
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    network_mode: host
+    env_file: ".env"
+    environment:
+      - VERSION=docker
+    volumes:
+      - ~/configs/plex:/config
+      - ~/media/tv:/tv
+      - ~/media/movies:/movies
+    restart: unless-stopped
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    env_file: ".env"
+    environment:
+      - WEBUI_PORT=8080
+      - TORRENTING_PORT=6881
+    volumes:
+      - ~/configs/qbittorrent:/config
+      - ~/downloads:/downloads
+    ports:
+      - 8080:8080
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
+    networks: 
+      - mediarr 
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    env_file: ".env"
+    volumes:
+      - ~/configs/prowlarr:/config
+    ports:
+      - 9696:9696
+    restart: unless-stopped
+    networks: 
+      - mediarr 
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    env_file: ".env"
+    volumes:
+      - ~/configs/radarr:/config
+      - ~/media/movies:/movies
+      - ~/downloads:/downloads
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+    networks: 
+      - mediarr 
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    env_file: ".env"
+    volumes:
+      - ~/configs/sonarr:/config
+      - ~/media/tv:/tv
+      - ~/downloads:/downloads
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+    networks: 
+      - mediarr 
+
+networks: 
+  mediarr: 
