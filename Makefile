@@ -7,7 +7,7 @@ SHELL= /bin/sh
 
 docker_bin= $(shell command -v docker 2> /dev/null)
 docker_compose_bin= $(shell command -v docker-compose 2> /dev/null)
-COMPOSE_CONFIG=-f docker/docker-compose.$(ENVIRONMENT).yml
+COMPOSE_CONFIG=-f docker-compose.yml
 
 .DEFAULT_GOAL := help
 
