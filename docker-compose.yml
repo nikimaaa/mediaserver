@@ -27,7 +27,7 @@ services:
       - ~/media/movies:/movies
     restart: unless-stopped
   qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent:latest
+    image: hotio/qbittorrent
     container_name: qbittorrent
     env_file: ".env"
     environment:
