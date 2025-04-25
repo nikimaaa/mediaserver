@@ -31,3 +31,7 @@ down: ## Stop all started for development containers
 	$(docker_compose_bin) $(COMPOSE_CONFIG) down
 restart: ## Restart all started for development containers
 	$(docker_compose_bin) $(COMPOSE_CONFIG) restart
+folder:
+	mkdir -p /data/{torrents,media}/{books,moovies,music,tv}
+	sudo chown -R $USER:$USER /data
+	sudo chmod -R a=,a+rX,u+w,g+w /data
