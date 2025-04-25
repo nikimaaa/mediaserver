@@ -34,7 +34,7 @@ services:
       - WEBUI_PORT=8080
       - TORRENTING_PORT=6881
     volumes:
-      - ~/configs/qbittorrent:/config
+      - /docker/appdata/qbittorrent:/config
       - ~/downloads:/downloads
     ports:
       - 8080:8080
