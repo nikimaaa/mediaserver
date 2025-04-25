@@ -22,9 +22,9 @@ services:
     environment:
       - VERSION=docker
     volumes:
-      - ~/configs/plex:/config
-      - ~/media/tv:/tv
-      - ~/media/movies:/movies
+      - /docker/appdata/plex:/config
+      - /data/tv:/tv
+      - /data/movies:/movies
     restart: unless-stopped
   qbittorrent:
     image: hotio/qbittorrent
@@ -44,37 +44,41 @@ services:
     networks: 
       - mediarr 
   prowlarr:
-    image: lscr.io/linuxserver/prowlarr:latest
+    image: ghcr.io/hotio/prowlarr:latest
     container_name: prowlarr
     env_file: ".env"
     volumes:
-      - ~/configs/prowlarr:/config
+      - /docker/appdata/prowlarr:/config
     ports:
       - 9696:9696
     restart: unless-stopped
     networks: 
       - mediarr 
   radarr:
-    image: lscr.io/linuxserver/radarr:latest
+    image: ghcr.io/hotio/radarr:latest
     container_name: radarr
     env_file: ".env"
+    logging:
+      driver: json-file
     volumes:
-      - ~/configs/radarr:/config
-      - ~/media/movies:/movies
-      - ~/downloads:/downloads
+       - /etc/localtime:/etc/localtime:ro
+       - /docker/appdata/radarr:/config
+       - /data:/data
     ports:
       - 7878:7878
     restart: unless-stopped
     networks: 
       - mediarr 
   sonarr:
-    image: lscr.io/linuxserver/sonarr:latest
+    image: ghcr.io/hotio/sonarr:latest
     container_name: sonarr
     env_file: ".env"
+    logging:
+      driver: json-file
     volumes:
-      - ~/configs/sonarr:/config
-      - ~/media/tv:/tv
-      - ~/downloads:/downloads
+       - /etc/localtime:/etc/localtime:ro
+       - /docker/appdata/sonarr:/config
+       - /data:/data
     ports:
       - 8989:8989
     restart: unless-stopped
