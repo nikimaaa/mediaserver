@@ -11,17 +11,15 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "/docker/appdata/portainer:/data portainer/portainer-ce:lts"
     restart: always
-  plex:
-    image: lscr.io/linuxserver/plex:latest
-    container_name: plex
-    network_mode: host
+  jellyfin:
+    image: ghcr.io/hotio/jellyfin
+    container_name: jellyfin
     env_file: ".env"
-    environment:
-      - VERSION=docker
     volumes:
-      - /docker/appdata/plex:/config
-      - /data/tv:/tv
-      - /data/movies:/movies
+      - /docker/appdata/jellyfin:/config
+      - /data:/data
+    ports:
+      - 8096:8096
     restart: unless-stopped
   qbittorrent:
     image: hotio/qbittorrent
