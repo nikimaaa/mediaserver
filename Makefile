@@ -3,7 +3,7 @@
 include .env
 
 #----------- Make Environment ----------------------
-SHELL= /bin/sh
+SHELL=/bin/bash
 
 docker_bin= $(shell command -v docker 2> /dev/null)
 docker_compose_bin= $(shell command -v docker-compose 2> /dev/null)
@@ -32,6 +32,6 @@ down: ## Stop all started for development containers
 restart: ## Restart all started for development containers
 	$(docker_compose_bin) $(COMPOSE_CONFIG) restart
 folder:
-	sudo mkdir -p {{/data/{torrents,media}/{books,moovies,music,tv}}}
+	sudo mkdir -p /data/{torrents,media}/{books,moovies,music,tv}
 	sudo chown -R ${PUID}:${PUID} /data
 	sudo chmod -R a=,a+rX,u+w,g+w /data
