@@ -5,8 +5,6 @@ include .env
 #----------- Make Environment ----------------------
 SHELL=/bin/bash
 
-docker_bin= $(shell command -v docker 2> /dev/null)
-docker_compose_bin= $(shell command -v docker-compose 2> /dev/null)
 COMPOSE_CONFIG=-f docker-compose.yml
 
 .DEFAULT_GOAL := help
@@ -24,13 +22,13 @@ help: ## Show this help
 ---------------: ## ------[ ACTIONS ]---------
 #Actions --------------------------------------------------
 check: ## Check your configuration
-	$(docker_compose_bin) $(COMPOSE_CONFIG) config
+	docker compose $(COMPOSE_CONFIG) config
 up: ## Start all containers (in background)
-	$(docker_compose_bin) $(COMPOSE_CONFIG) up -d
+	docker compose $(COMPOSE_CONFIG) up -d
 down: ## Stop all started for development containers
-	$(docker_compose_bin) $(COMPOSE_CONFIG) down
+	docker compose $(COMPOSE_CONFIG) down
 restart: ## Restart all started for development containers
-	$(docker_compose_bin) $(COMPOSE_CONFIG) restart
+	docker compose $(COMPOSE_CONFIG) restart
 folder:
 	sudo mkdir -p /data/{torrents,media}/{books,moovies,music,tv}
 	sudo chown -R ${PUID}:${PUID} /data
