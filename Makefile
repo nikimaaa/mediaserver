@@ -30,6 +30,6 @@ down: ## Stop all started for development containers
 restart: ## Restart all started for development containers
 	docker compose $(COMPOSE_CONFIG) restart
 folder:
-	sudo mkdir -p /data/{torrents,media}/{books,moovies,music,tv}
+	sudo mkdir -p /data/{torrents,media}/{books,movies,music,tv}
 	sudo chown -R ${PUID}:${PUID} /data
 	sudo chmod -R a=,a+rX,u+w,g+w /data
