@@ -1,8 +1,5 @@
 version: "3"
 
-volumes:
-  portainer_data:
-
 services: 
   portainer: 
     image: portainer/portainer-ce
@@ -12,7 +9,7 @@ services:
       - "9443:9443"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
-      - "portainer_data:/data portainer/portainer-ce:lts"
+      - "/docker/appdata/portainer:/data portainer/portainer-ce:lts"
     restart: always
   plex:
     image: lscr.io/linuxserver/plex:latest
