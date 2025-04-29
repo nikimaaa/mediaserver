@@ -93,6 +93,16 @@ services:
     restart: unless-stopped  
     networks: 
       - mediarr
+  heimdall:
+    image: lscr.io/linuxserver/heimdall:latest
+    container_name: heimdall
+    env_file: ".env"
+    volumes:
+      - /docker/appdata/heimdall/config:/config
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: unless-stopped
 
 networks: 
   mediarr: 
