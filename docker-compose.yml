@@ -80,17 +80,15 @@ services:
     networks: 
       - mediarr
   readarr:
-    image: ghcr.io/hotio/readarr
-    container_name: sonarr
+    image: ghcr.io/hotio/readarr:latest
+    container_name: readarr
     env_file: ".env"
-    logging:
-      driver: json-file
     volumes:
        - /etc/localtime:/etc/localtime:ro
-       - /docker/appdata/sonarr:/config
+       - /docker/appdata/readarr:/config
        - /data:/data
     ports:
-      - 8989:8989
+      - 8787:8787
     restart: unless-stopped
     networks: 
       - mediarr
