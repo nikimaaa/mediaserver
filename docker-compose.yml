@@ -79,6 +79,21 @@ services:
     restart: unless-stopped
     networks: 
       - mediarr
+  readarr:
+    image: ghcr.io/hotio/readarr
+    container_name: sonarr
+    env_file: ".env"
+    logging:
+      driver: json-file
+    volumes:
+       - /etc/localtime:/etc/localtime:ro
+       - /docker/appdata/sonarr:/config
+       - /data:/data
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+    networks: 
+      - mediarr
   flaresolverr:
     # DockerHub mirror flaresolverr/flaresolverr:latest
     image: ghcr.io/flaresolverr/flaresolverr:latest
